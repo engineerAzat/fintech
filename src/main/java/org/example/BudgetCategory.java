@@ -32,8 +32,17 @@ public class BudgetCategory {
     }
 
     public void addExpense(double amount) {
+        if (moneySpentInTheCategoryThisMonth + amount > monthlyLimit) {
+            String errorMessage = String.format(
+                    "Операция оклонена! Превышен лимит по категории [%s]. Осталось: %.2f рублей, а вы пытаетесь потратить: %.2f рублей.",
+                    categories, (monthlyLimit - moneySpentInTheCategoryThisMonth), amount
+            );
+            throw new LimitExceededException(errorMessage);
+        }
         this.moneySpentInTheCategoryThisMonth += amount;
     }
+
+
 
 
 }
